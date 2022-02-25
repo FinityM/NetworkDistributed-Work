@@ -72,6 +72,14 @@ def parseInput(data, con):
 
     elif "<listall>" in str(data):
         listAllSongs()
+    elif "<get" in str(data):
+        print("getting a file")
+        parts = str(data.split('-'))
+        filename = parts[1] # just get the filename
+        print("filename: " + str(filename)) # print the filename
+        print("sending the file")
+
+        cleanedName = filename[0:-3] # take the last 3 chars off
 
 
 # we make a new thread is started from an incoming connection

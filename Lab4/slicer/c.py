@@ -32,6 +32,13 @@ while True:
         content = f.read()
         s.sendall(content)
         f.close()
+    elif "<get" in text:
+        parts = text.split("-")
+
+        print(parts[0]) # command name
+
+        print(parts[1]) # the file name
+
     elif "<segment>":
         print("please enter a file name")
 
