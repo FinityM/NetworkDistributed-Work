@@ -39,6 +39,14 @@ while True:
 
         print(parts[1]) # the file name
 
+        f = open('c0part.mp3', 'wb')
+
+        partOfFile = s.recv(1000)
+
+        while partOfFile:
+            f.write(partOfFile)
+            partOfFile = s.recv(1000)
+
     elif "<segment>":
         print("please enter a file name")
 
