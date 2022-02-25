@@ -28,7 +28,7 @@ while True:
 
     if "<addsong" in text:
         # read file and send it
-        f = open('chunk1.mp3', 'rb')
+        f = open('chunk0.mp3', 'rb')
         content = f.read()
         s.sendall(content)
         f.close()

@@ -60,7 +60,7 @@ def parseInput(data, con):
         listOfSongs.append(parts[1])  # store the song name
 
         # receive the file and make it
-        f = open('c1.mp3', 'wb')
+        f = open('c0.mp3', 'wb')
 
         partOfFile = con.recv(1000)
 
