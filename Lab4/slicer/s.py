@@ -80,6 +80,14 @@ def parseInput(data, con):
         print("sending the file")
 
         cleanedName = filename[0:-3] # take the last 3 chars off
+        print(cleanedName) #just to see the filename cleaned
+
+        #open the file
+        f = open(cleanedName, 'rb')
+        content = f.read()
+        # send the bytes
+        con.sendall(content)
+
 
 
 # we make a new thread is started from an incoming connection
