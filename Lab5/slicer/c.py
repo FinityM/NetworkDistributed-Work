@@ -33,6 +33,14 @@ while True:
         s.sendall(content)
         f.close()
 
+    elif "<findall>" in text:
+        answer = s.recv(1000)
+        print(answer)
+
+    elif "<hash" in text:
+        answer = s.recv(1000)
+        print(answer)
+
     elif "<get" in text:
         parts = text.split("-")
 

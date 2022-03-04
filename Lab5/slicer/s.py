@@ -1,5 +1,7 @@
+import os
 import socket
 import threading
+import hashlib
 
 HOST = '127.0.0.1'
 PORT = 50007
@@ -31,7 +33,6 @@ def listAllSongs():
     for oneSong in listAllSongs:
         print(oneSong)
 
-
 # sample parser function. The job of this function is to take some input
 # data and search to see if a command is present in the text. If it finds a 
 # command it will then need to extract the command.
@@ -46,8 +47,42 @@ def parseInput(data, con):
     if "<hello>" in data:
         print("command in data..")
         # formatted= strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-
         con.send(str("hello there").encode())
+
+    elif "<hash" in str(data):
+        # Declare the hash algorithm
+        m = hashlib.sha256()
+
+        parts = str(data).split('-')
+
+        filename = parts[1] # this contains the filename
+        cleanedName = filename[0:-3] # chop off the last 3
+
+        # read in the file
+        file = open(cleanedName, 'rb')
+        content = file.read()
+
+        # get the hash
+        m.update(content)
+        res = m.digest()
+
+        # send back the result
+        con.send(res)
+
+    elif "<findall>" in str(data):
+        # list all the files in the directory
+        # make sure they are mp3 files
+        files = os.listdir(path=".")
+
+        cleaned = list()
+        for oneFile in files:
+            if ".mp3" in oneFile:
+                print(oneFile)
+                cleaned.append(oneFile)
+
+
+        con.send(str(cleaned).encode())
+
     elif "<addsong" in data:  # <addsong-britney.mp3-localhost>
         print("adding a song")
         parts = data.split("-")
@@ -111,9 +146,7 @@ def manageConnection(conn, addr):
     buffer += str(data)
 
     # conn.send(str(buffer))
-
     # conn.close()
-
 
 while 1:
     s.listen(1)
