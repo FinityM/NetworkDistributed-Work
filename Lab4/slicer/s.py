@@ -72,9 +72,10 @@ def parseInput(data, con):
 
     elif "<listall>" in str(data):
         listAllSongs()
+
     elif "<get" in str(data):
         print("getting a file")
-        parts = str(data.split('-'))
+        parts = str(data).split('-')
         filename = parts[1] # just get the filename
         print("filename: " + str(filename)) # print the filename
         print("sending the file")
@@ -87,6 +88,9 @@ def parseInput(data, con):
         content = f.read()
         # send the bytes
         con.sendall(content)
+        f.close()
+
+        print("send the file")
 
 
 

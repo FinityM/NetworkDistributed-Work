@@ -32,6 +32,7 @@ while True:
         content = f.read()
         s.sendall(content)
         f.close()
+
     elif "<get" in text:
         parts = text.split("-")
 
@@ -46,6 +47,7 @@ while True:
         while partOfFile:
             f.write(partOfFile)
             partOfFile = s.recv(1000)
+            print(partOfFile)
 
     elif "<segment>":
         print("please enter a file name")
