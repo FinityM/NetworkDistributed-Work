@@ -26,7 +26,6 @@ List all songs in the list
 at the top of the program
 '''
 
-
 def listAllSongs():
     global listAllSongs
 
