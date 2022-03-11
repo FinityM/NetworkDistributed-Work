@@ -1,7 +1,7 @@
+import hashlib
 import os
 import socket
 import threading
-import hashlib
 
 HOST = '127.0.0.1'
 PORT = 50007
@@ -26,11 +26,13 @@ List all songs in the list
 at the top of the program
 '''
 
+
 def listAllSongs():
     global listAllSongs
 
     for oneSong in listAllSongs:
         print(oneSong)
+
 
 # sample parser function. The job of this function is to take some input
 # data and search to see if a command is present in the text. If it finds a 
@@ -54,8 +56,8 @@ def parseInput(data, con):
 
         parts = str(data).split('-')
 
-        filename = parts[1] # this contains the filename
-        cleanedName = filename[0:-3] # chop off the last 3
+        filename = parts[1]  # this contains the filename
+        cleanedName = filename[0:-3]  # chop off the last 3
 
         # read in the file
         file = open(cleanedName, 'rb')
@@ -78,7 +80,6 @@ def parseInput(data, con):
             if ".mp3" in oneFile:
                 print(oneFile)
                 cleaned.append(oneFile)
-
 
         con.send(str(cleaned).encode())
 
@@ -110,14 +111,14 @@ def parseInput(data, con):
     elif "<get" in str(data):
         print("getting a file")
         parts = str(data).split('-')
-        filename = parts[1] # just get the filename
-        print("filename: " + str(filename)) # print the filename
+        filename = parts[1]  # just get the filename
+        print("filename: " + str(filename))  # print the filename
         print("sending the file")
 
-        cleanedName = filename[0:-3] # take the last 3 chars off
-        print(cleanedName) #just to see the filename cleaned
+        cleanedName = filename[0:-3]  # take the last 3 chars off
+        print(cleanedName)  # just to see the filename cleaned
 
-        #open the file
+        # open the file
         f = open(cleanedName, 'rb')
         content = f.read()
         # send the bytes
@@ -125,7 +126,6 @@ def parseInput(data, con):
         f.close()
 
         print("send the file")
-
 
 
 # we make a new thread is started from an incoming connection
@@ -146,6 +146,7 @@ def manageConnection(conn, addr):
 
     # conn.send(str(buffer))
     # conn.close()
+
 
 while 1:
     s.listen(1)

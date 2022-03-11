@@ -1,9 +1,7 @@
 import os
-import glob
 import socket
 import threading
 import hashlib
-from pydub import AudioSegment as convert
 
 HOST = '127.0.0.1'
 PORT = 50007
@@ -49,9 +47,6 @@ def parseInput(data, con):
         print("command in data..")
         # formatted= strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         con.send(str("hello there").encode())
-
-    elif "<convert" in data: #<convert-britney.mp3>
-        song = glob.glob()
 
     elif "<hash" in str(data):
         # Declare the hash algorithm
@@ -131,7 +126,14 @@ def parseInput(data, con):
 
         print("send the file")
 
+    elif "<checkport>" in data:
 
+        location = (HOST, PORT)
+        result_of_check = s.connect_ex(location)
+        if result_of_check == 0:
+            con.send(str("Port is open").encode())
+        else:
+            con.send(str("Port is not open").encode())
 
 # we make a new thread is started from an incoming connection
 # the manageConnection funnction is used to take the input

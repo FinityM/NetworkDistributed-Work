@@ -44,9 +44,9 @@ while True:
     elif "<get" in text:
         parts = text.split("-")
 
-        print(parts[0]) # command name
+        print(parts[0])  # command name
 
-        print(parts[1]) # the file name
+        print(parts[1])  # the file name
 
         f = open('c0part.mp3', 'wb')
 

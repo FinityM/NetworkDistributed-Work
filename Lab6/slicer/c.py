@@ -1,7 +1,10 @@
 # Echo client program
 import socket
+import glob
+import os
 
 from pydub import AudioSegment
+from pydub import AudioSegment as Convert
 from pydub.utils import make_chunks
 
 HOST = '127.0.0.1'  # The remote host
@@ -59,7 +62,7 @@ while True:
             partOfFile = s.recv(1000)
             print(partOfFile)
 
-    elif "<segment>":
+    elif "<segment>" in text:
         print("please enter a file name")
 
         file_name = input()
@@ -73,6 +76,51 @@ while True:
         for i, chunk in enumerate(chunks):
             chunk_name = "chunk{0}.mp3".format(i)
             chunk.export(chunk_name, format="mp3")
+
+    elif "<convert>" in text:
+        print("Enter a the filename to convert to a wav file")
+
+        filename = input()
+
+        songs = glob.glob(filename)
+
+        # print names of files being converted
+        print("----------------------------------------\nFiles being converted:\n")
+
+        for song in songs:
+            print(song)
+
+        print("----------------------------------------\n")
+
+        # loop converting files and showing progress of each
+        for song in songs:
+            song_name = song[:-4]
+            print("Converting", song_name)
+
+            destination = song_name + ".wav"
+
+            song = Convert.from_file(song, format="mp3")
+            song.export(destination, format="wav")
+
+            print("Done\n")
+
+        # display completion and where files are located
+        working_dir = os.getcwd()
+        print("All files have been converted and can be found in", working_dir)
+
+    elif "<deletefile>" in text:
+        print("Enter a file in the directory to delete")
+
+        fileToDelete = input()
+
+        if os.path.exists(fileToDelete):
+            os.remove(fileToDelete)
+        else:
+            print("File does not exist")
+
+    elif "<checkport>" in text:
+        answer = s.recv(1000)
+        print(answer)
 
     # print("Response:" + str(data))
 
